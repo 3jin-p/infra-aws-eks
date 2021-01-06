@@ -1,0 +1,35 @@
+piVersion: v1
+data:
+  td-agent.conf: |-
+    <source>
+    @type tail
+    format none
+    path /app/log/docswave-app.log
+    pos_file /var/log/docswave-app.log.pos
+    tag docswave.applog
+    </source>
+    <match docswave.**>
+     @type "aws-elasticsearch-service"
+     logstash_format true
+     include_tag_key true
+     tag_key "@log_name"
+     reload_connections false
+     reconnect_on_error true
+     reload_on_failure true
+     flush_interval 1s
+     <endpoint>
+       url https://search-testpublic-6ka5nqs7jgpmuiyd5kbbefyd6y.ap-northeast-2.es.amazonaws.com
+       region ap-northeast-2
+       access_key_id "#{ENV['AWS_ACCESS_KEY']}"
+       secret_access_key "#{ENV['AWS_ACCESS_SECRET']}"
+     </endpoint>
+     </match>
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2020-12-28T02:08:36Z"
+  name: fluentd-config
+  namespace: kubetest
+  resourceVersion: "5157542"
+  selfLink: /api/v1/namespaces/kubetest/configmaps/fluentd-config
+  uid: 6f94d99a-e9b2-4d4a-97b7-58bea25e1a39
+
