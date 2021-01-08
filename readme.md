@@ -22,7 +22,8 @@ Default output format [None]: <>
 
  eksctl 을 설치하면 kubectl 은 자동으로 설치되며 사전준비 끝!
   
-### 서버구성
+## 서버구성
+
 - 클러스터생성  
 ``` bash 
 eksctl create cluster \ 
@@ -33,27 +34,8 @@ eksctl create cluster \
 ```  
 으로 클러스터를 생성하면 Fargate Profile 과 함께 설정한 값들로 클러스터가 생성된다.
 
-<참고>
 
-fargate 란 AWS 에서 제공하는 컨테이너 서버리스 컴퓨팅
 
-장점으로는
-
-1. 자동으로 노드의 성능을 조절해주기 때문에 오토스케일러를 세팅할 필요가 없다.
-
-2. Pod 실행 시간단위로 비용청구가 된다.
-
-3. Fargate 구조상 Pod 간 기본 커널, CPU 리소스, 메모리 리소스 또는 탄력적 네트워크 인터페이스를 공유하지 않아 VM 수준의 격리가 가능하다
-
-단점으로는 
-
-1. Statefule 한 워크로드가 사용불가능하다  → 세션 정보를 서버가 아닌 외부에 저장하도록 설계가 필수적이다.
-
-2. 특수 권한이 있는 DaemonSet 등의 Pod가 이용불가능하다 → DaemonSet 처럼 이용하고 싶은 컨테이너가 있다면 k8s SideCar 패턴으로 지원하여야한다. (EFK 스택을 sidecar 패턴으로 구현할 예정이다.)
-
-3. 로드밸런서의 사용이 제한적이다. ALB or ELB + Ingress 를 사용하여야한다
-
-등이 있다. 
 
 eksctl get cluster
 
