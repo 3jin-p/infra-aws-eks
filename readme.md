@@ -1,32 +1,21 @@
 AWS-EKS with Fargate 
 ------
 
-##사전준비  
+## 사전준비  
 
-1.AWS CLI 설치 
-
+- AWS CLI 설치 
 버전 1.18.163 이상 또는 버전 2.0.59  OR AWS-CLI-2
-
 `curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg" sudo installer -pkg AWSCLIV2.pkg -target /`
 
-2. EKSCTL 설치 
-
-Homebrew 설치 필요. 
-
+- EKSCTL 설치 
+Homebrew가 설치되어 있지 않다면 Homebrew 설치 
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"` 
-
 Weaveworks Homebrew tap 설치
+`brew tap weaveworks/tap && brew install weaveworks/tap/eksctl`
+>eksctl 을 설치하면 kubectl 은 자동으로 설치된다.
 
-`brew tap weaveworks/tap`
-
-`brew install weaveworks/tap/eksctl`
-
-eksctl 을 설치하면 kubectl 은 자동으로 설치된다.
-
-서버 구성 -
-
-클러스터생성
-
+### 서버구성
+- 클러스터생성
 ``` bash 
 eksctl create cluster \ 
 --name <cluster-name> \ 
@@ -34,7 +23,6 @@ eksctl create cluster \
 --region <cluster-region> \ 
 --fargate
 ```
-
 으로 클러스터를 생성하면 Fargate Profile 과 함께 설정한 값들로 클러스터가 생성된다.
 
 <참고>
