@@ -32,7 +32,8 @@ Sidecar 패턴이란 오토바이 옆에 붙이는 보조석처럼
 
 여기서는 위 그림 처럼 두개의 컨테이너가 동일한 파일시스템을 공유하도록하여 로깅시스템을 구축할 것이다.
 
-**구성**
+**구성**  
+![ES+Fluentd+Kibana](efk.png)
 
 일반적으로 별도의 ES를 설치한 VM 인스턴스를 이용하는 경우 중간에 Redis 와 로그수집기를 하나 더 두어
 
@@ -72,11 +73,11 @@ FLUENTD_ARGS 라는 이름으로 저장된 환경변수를 옵션으로 td-agent
 
 우선 로그수집 설정을할 td-agent.conf 에 들어갈 내용을 ConfigMap으로 생성한다.
 
-kubectl create cm <cm-name>
+`kubectl create cm <cm-name>`
 
-kubectl edit cm <cm-name>
+`kubectl edit cm <cm-name>`
 
-```
+``` bash
 apiVersion: v1
 data:
   td-agent.conf: |-
@@ -124,7 +125,7 @@ td-agent.conf 의 문법은 공식문서 ([https://docs.fluentd.org/configuratio
 
 endpoint 아래에 있는 aws 계정값같은 보안이 필요한 데이터는 Secret을 이용하여 환경변수로 등록하여 사용한다.
 
-```
+``` bash
 kubectl create secret generic aws-account-secret \
   --from-literal=<AWS_ACCESS_KEY>=<key> \
   --from-literal=<AWS_ACCESS_SECRET>=<secret>
@@ -132,7 +133,7 @@ kubectl create secret generic aws-account-secret \
 
 **3. 생성한 Secret, ConfigMap을 이용하여 위에서 생성한 이미지를  로그를 생성할 Application 이 구동되는 Pod의 Deployment에 붙여준다.**
 
-```
+``` bash
 apiVersion: apps/v1
 kind: Deployment
 metadata:
