@@ -68,7 +68,7 @@ FLUENTD_ARGS 라는 이름으로 저장된 환경변수를 옵션으로 td-agent
 
 생성한 이미지를 ecr 등 이미지 저장 버킷에 푸쉬한다.
 
-**2.Fluentd 가 올라가있는 컨테이너에서 사용할 세팅값들을 ConfigMap 이나 Secret 으로 만들어준다.**
+**2.Fluentd 가 올라가있는 컨테이너에서 사용할 세팅값들을 ConfigMap 이나 Secret 으로 .**
 
 우선 로그수집 설정을할 td-agent.conf 에 들어갈 내용을 ConfigMap으로 생성한다.
 
@@ -130,7 +130,7 @@ kubectl create secret generic aws-account-secret \
   --from-literal=<AWS_ACCESS_SECRET>=<secret>
 ```
 
-**3. 생성한 Secret, ConfigMap을 이용하여 위에서 생성한 이미지를  로그를 생성할 Application 이 구동되는 Pod의 Deployment에 붙여준다.**
+**3.생성한 Secret, ConfigMap을 컨테이너의 환경변수로 등록**
 
 ``` bash
 apiVersion: apps/v1
@@ -241,15 +241,16 @@ spec:
 
 3.env 아래에 fluentd 설정을 위한 환경변수들을 등록해준다. 여기서는 aws 계정정보를 저장한 secret과 fluentd 실행 옵션이 등록되어 있는것을 확인할 수 있다.
 
-4. volumes 아래에 위에서 생성한 td-agent.conf 에 들어갈 값들이 저장되어 있는 configmap을 볼륨으로 등록하고, 해당 볼륨을 /etc/td-agent에 마운트 시킨다.
+4.volumes 아래에 위에서 생성한 td-agent.conf 에 들어갈 값들이 저장되어 있는 configmap을 볼륨으로 등록하고, 해당 볼륨을 /etc/td-agent에 마운트 시킨다.
 
+---
 여기까지 완료하면, application 컨테이너와 fluentd 컨테이너가 하나의 포드에 떠 있는것을 확인할 수 있을것이다.
 
 이제 aws-elasticsearch로 가서 확인해보면 끝.
 
-정상적으로 수집이 되지 않았다면,
+정상적으로 수집이 되지 않았다면,  
 
-kubectl logs <pod-name> -c <fluentd container-name>
+`kubectl logs <pod-name> -c <fluentd container-name>`
 
 으로 확인해보면 된다.
 
