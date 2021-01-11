@@ -1,5 +1,7 @@
 AWS-EKS with Fargate 
 ------
+- AWS Fargate? 
+[AWS Fargate 간단 설명](https://github.com/3jin-p/study/tree/master/infra/aws/fargate)  
 
 ## 사전준비  
 
