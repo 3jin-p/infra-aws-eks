@@ -225,7 +225,7 @@ NAME           CLASS    HOSTS   ADDRESS                                         
 
 으로 로드밸런서 컨트롤러의 로그를 확인할 수 있다.  
 
-**NEXT STEP**
-![k8s 무중단배포](https://github.com/3jin-p/study/tree/master/infra/k8s/deploy)  
-![EFKstack 로깅시스템 구성](https://github.com/3jin-p/infra-aws-eks/edit/master/efkStack)
+**NEXT STEP**  
+[k8s 무중단배포](https://github.com/3jin-p/study/tree/master/infra/k8s/deploy)   
+[EFKstack 로깅시스템 구성](https://github.com/3jin-p/infra-aws-eks/edit/master/efkStack)
 
